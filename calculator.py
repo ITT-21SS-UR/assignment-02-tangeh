@@ -1,3 +1,5 @@
+#!/usr/bin/python3
+
 import sys
 from PyQt5.QtWidgets import QMainWindow
 from PyQt5 import uic, Qt, QtCore
@@ -12,8 +14,8 @@ class Calculator(QMainWindow):
 
     # logs every important keystroke
     def log_key(message):
-        def func_decorator1(func):
-            def new_func1(self, event):
+        def log_key_event(func):
+            def logging(self, event):
                 numbers_operators = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '.', '+', '-', '*', '/']
                 if event.text() in numbers_operators:
                     sys.stdout.write(message + str(event.text()) + "\n")
@@ -24,8 +26,8 @@ class Calculator(QMainWindow):
                 elif event.key() == 16777223:
                     sys.stdout.write(message + "Clear \n")
                 func(self, event)
-            return new_func1
-        return func_decorator1
+            return logging
+        return log_key_event
 
     # handles the event when a key is pressed
     @log_key("This key was pressed: ")
@@ -79,8 +81,8 @@ class Calculator(QMainWindow):
 
     # logs every button press
     def log_button(message):
-        def func_decorator(func):
-            def new_func(self, text):
+        def log_button_event(func):
+            def logging(self, text):
                 numbers_operators = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '.', '+', '-', '*', '/']
                 if text in numbers_operators:
                     sys.stdout.write(message + text + "\n")
@@ -91,8 +93,8 @@ class Calculator(QMainWindow):
                 elif text == 'c':
                     sys.stdout.write(message + "AC (All cleared) \n")
                 func(self, text)
-            return new_func
-        return func_decorator
+            return logging
+        return log_button_event
 
     # decides which character has to be added or what action has to be done for each button press
     @log_button("This button was clicked: ")
