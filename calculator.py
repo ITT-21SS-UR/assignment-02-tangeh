@@ -20,7 +20,12 @@ class Calculator(QMainWindow):
                 if event.text() in numbers_operators:
                     sys.stdout.write(message + str(event.text()) + "\n")
                 elif event.text() == '=':
-                    sys.stdout.write(message + str(event.text()) + " (calculated the equation) \n")
+                    equ = self.ui.calc_output.text()
+                    try:
+                        ans = eval(equ)
+                    except SyntaxError:
+                        ans = "No valid input"
+                    sys.stdout.write(message + str(event.text()) + " (Result: " + str(ans) + ") \n")
                 elif event.key() == 16777219:
                     sys.stdout.write(message + "Delete \n")
                 elif event.key() == 16777223:
@@ -87,11 +92,16 @@ class Calculator(QMainWindow):
                 if text in numbers_operators:
                     sys.stdout.write(message + text + "\n")
                 elif text == '=':
-                    sys.stdout.write(message + text + " (calculated the equation) \n")
+                    equ = self.ui.calc_output.text()
+                    try:
+                        ans = eval(equ)
+                    except SyntaxError:
+                        ans = "No valid input"
+                    sys.stdout.write(message + text + " (Result: " + str(ans) + ") \n")
                 elif text == 'd':
                     sys.stdout.write(message + "DEL (removed last character) \n")
                 elif text == 'c':
-                    sys.stdout.write(message + "AC (All cleared) \n")
+                    sys.stdout.write(message + "AC (all cleared) \n")
                 func(self, text)
             return logging
         return log_button_event
